@@ -1,0 +1,66 @@
+{% extends 'basic.html' %}
+{% block title %}CuddlesForKids | Track Your Order{% endblock %}
+{% block css %}
+        .navbar-custom {
+            background-color: #809fff;
+        }
+        .navbar-custom .navbar-brand,
+        .navbar-custom .nav-link,
+        .navbar-custom .btn,
+        .navbar-custom .navbar-text {
+            color: white;
+        }
+        .footer {
+          left: 0;
+          bottom: 0;
+          width: 100%;
+          text-align: center;
+        }
+{% endblock %}
+{% block body %}
+{% load static %}
+<div class="container mt-2 mb-5">
+    <h3>Track Your Order</h3><br>
+    <form method="post" id="trackerForm"> {% csrf_token %}
+	  <div class="form-row">
+	    <div class="form-group col-md-6">
+	      <label for="orderid">Order Id</label>
+	      <input type="orderid" class="form-control" id="orderid" name="orderid">
+	    </div>
+	    <div class="form-group col-md-6">
+	      <label for="email">Email</label>
+	      <input type="email" class="form-control" id="email" name="email">
+	    </div>
+	  </div>
+	  </div>
+	  <button type="submit" class="btn btn-danger">Track Order</button>
+	</form>
+	<div class="my-4">
+		<ul class="list-group" id="items"></ul>
+	</div>
+</div>
+{% endblock %}
+
+{% block js %}
+<script>
+$('#trackerForm').submit(function(event) {
+	$('#items').empty();
+	var formData = {
+		'orderid': $('input[name=orderid]').val(),
+		'email': $('input[name=email]').val(),
+		'csrfmiddlewaretoken': $('input[name=csrfmiddlewaretoken]').val()
+	}
+	$.ajax({
+		type: 'POST',
+		url: '/shop/tracker/',
+		data: formData,
+		encode: true		
+	})
+
+	.done(function(data){
+		console.log(data)
+	});
+	event.preventDefault();
+})
+</script>
+{% endblock %}
