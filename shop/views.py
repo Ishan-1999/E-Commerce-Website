@@ -75,7 +75,7 @@ def checkout(request,):
     return render(request, "checkout.html")
 
 
-def tracker(request,):
+def tracker(request):
     if request.method == 'POST':
         orderid = request.POST.get('orderid', '')
         email = request.POST.get('email', '')
@@ -86,11 +86,11 @@ def tracker(request,):
                 updates = []
                 for item in update:
                     updates.append({'text': item.update_desc, 'time': item.timestamp})
-                    response = json.dumps(updates)
-                    return HttpResponse(response)
+                    response = json.dumps(updates, default=str)
+                return HttpResponse(response)
             else:
-                pass
+                return HttpResponse('{}')
         except Exception as e:
-            pass
+            return HttpResponse('{}')
 
     return render(request, "tracker.html", )

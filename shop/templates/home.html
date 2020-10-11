@@ -1,6 +1,7 @@
 {% extends 'basic.html' %}
 {% block title %}Welcome to CuddlesForKids{% endblock %}
 {% block css %}
+<style>
         .navbar-custom { 
             background-color: #809fff; 
         } 
@@ -9,6 +10,12 @@
         .navbar-custom .btn,
         .navbar-custom .navbar-text { 
             color: white; 
+        } 
+        .navbar-toggler-icon {
+          background-image: url("data:image/svg+xml;charset=utf8,%3Csvg viewBox='0 0 32 32' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath stroke='white' stroke-width='2' stroke-linecap='round' stroke-miterlimit='10' d='M4 8h24M4 16h24M4 24h24'/%3E%3C/svg%3E");
+        }
+        .navbar-toggler {
+          border-color: white;
         } 
         .rounded-circle {
           padding: 15px;
@@ -23,6 +30,23 @@
           width: 100%;
           text-align: center;
         }
+        @media (max-width: 700px) {
+          .banner {
+            width: 100%;
+            height: auto;
+          }
+          .images {
+            width: 100%;
+            height: auto;
+          }
+        }
+        @media ((min-width: 701px) and (max-width: 1000px)) {
+          .images {
+            width: 100%;
+            height: auto;
+          }
+        }
+</style>
 {% endblock %}
 {% block body %}
     {% load static %}
@@ -51,54 +75,47 @@
           <img src="{% static 'carousel3.jpg' %}" class="d-block w-100" alt="...">
         </div>
       </div>
-      <a class="carousel-control-prev" href="#carouselExampleIndicators" role="button" data-slide="prev">
-        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-        <span class="sr-only">Previous</span>
-      </a>
-      <a class="carousel-control-next" href="#carouselExampleIndicators" role="button" data-slide="next">
-        <span class="carousel-control-next-icon" aria-hidden="true"></span>
-        <span class="sr-only">Next</span>
-      </a>
       </div>
     </div><br>
-    <!-- Boys Collection -->
-    <!--<h2 class="mx-5" style="font-family: 'Arizona'; color: #99ff99"><u><b>Boy's Collection</b></u></h2>-->
-<img src="{% static 'boys_col.jpg' %}" alt=""><br><br>
-    <div class="container boys">
-       <div class="row">
-             <div class="col-3">
-                <a href=""><img class="rounded-circle d-block" src="{% static 'tshirt.jpg' %}" height="200" width="200"></a>
+    <div>
+      <!-- Boys Collection -->
+      <img class="banner" src="{% static 'boys_col.jpg' %}" alt=""><br><br>
+          <div class="container boys">
+             <div class="row">
+                   <div class="col-3">
+                      <a href=""><img class="images rounded-circle d-block" src="{% static 'tshirt.jpg' %}" height="200" width="200"></a>
+                   </div>
+                   <div class="col-3">
+                      <a href=""><img class="images rounded-circle d-block" src="{% static 'shorts.jpg' %}" height="200" width="200"></a>
+                   </div>
+                   <div class="col-3">
+                      <a href=""><img class="images rounded-circle d-block" src="{% static 'shirts.jpg' %}" height="200" width="200"></a>
+                   </div>
+                   <div class="col-3">
+                      <a href=""><img class="images rounded-circle d-block" src="{% static 'jeans.jpg' %}" height="200" width="200"></a>
+                   </div>
              </div>
-             <div class="col-3">
-                <a href=""><img class="rounded-circle d-block" src="{% static 'shorts.jpg' %}" height="200" width="200"></a>
+          </div><br><br>
+          <!-- Girls Collection -->
+          <!--<h2 class="mx-5" style="font-family: 'Arizona'; color: #99ff99"><u><b>Girl's Collection</b></u></h2>-->
+      <img class="banner" src="{% static 'girls_col.jpg' %}" alt=""><br><br>
+          <div class="container girls">
+             <div class="row">
+                   <div class="col-3">
+                      <a href=""><img class="images rounded-circle d-block" src="{% static 'girl_top.jpg' %}" height="200" width="200"></a>
+                   </div>
+                   <div class="col-3">
+                      <a href=""><img class="images rounded-circle d-block" src="{% static 'girl_jeans.jpg' %}" height="200" width="200"></a>
+                   </div>
+                   <div class="col-3">
+                      <a href=""><img class="images rounded-circle d-block" src="{% static 'girl_tshirt.jpg' %}" height="200" width="200"></a>
+                   </div>
+                   <div class="col-3">
+                      <a href=""><img class="images rounded-circle d-block" src="{% static 'girl_skirts.jpg' %}" height="200" width="200"></a>
+                   </div>
              </div>
-             <div class="col-3">
-                <a href=""><img class="rounded-circle d-block" src="{% static 'shirts.jpg' %}" height="200" width="200"></a>
-             </div>
-             <div class="col-3">
-                <a href=""><img class="rounded-circle d-block" src="{% static 'jeans.jpg' %}" height="200" width="200"></a>
-             </div>
-       </div>
-    </div><br><br>
-    <!-- Girls Collection -->
-    <!--<h2 class="mx-5" style="font-family: 'Arizona'; color: #99ff99"><u><b>Girl's Collection</b></u></h2>-->
-<img src="{% static 'girls_col.jpg' %}" alt=""><br><br>
-    <div class="container girls">
-       <div class="row">
-             <div class="col-3">
-                <a href=""><img class="rounded-circle d-block" src="{% static 'girl_top.jpg' %}" height="200" width="200"></a>
-             </div>
-             <div class="col-3">
-                <a href=""><img class="rounded-circle d-block" src="{% static 'girl_jeans.jpg' %}" height="200" width="200"></a>
-             </div>
-             <div class="col-3">
-                <a href=""><img class="rounded-circle d-block" src="{% static 'girl_tshirt.jpg' %}" height="200" width="200"></a>
-             </div>
-             <div class="col-3">
-                <a href=""><img class="rounded-circle d-block" src="{% static 'girl_skirts.jpg' %}" height="200" width="200"></a>
-             </div>
-       </div>
-    </div><br><hr>
+          </div><br><hr>
+    </div>
 {% endblock %}
 
 {% block js %}
