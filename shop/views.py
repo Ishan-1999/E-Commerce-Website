@@ -1,11 +1,14 @@
 from django.shortcuts import render
 from django.http import HttpResponse
 import json
+from django.views.decorators.csrf import csrf_exempt
+from Paytm import Checksum
 
 
 # Create your views here.
 from .models import Product, Contact, Order, OrderUpdate
 
+MERCHANT_KEY = 'kgaR9AEPKRZToz#M'
 
 def home(request):
     return render(request, "home.html")
@@ -57,6 +60,7 @@ def checkout(request,):
     if request.method == 'POST':
         items_json = request.POST.get('items_json', '')
         name = request.POST.get('name', '')
+        amount = request.POST.get('amount', '')
         email = request.POST.get('email', '')
         address = request.POST.get('address', '')
         city = request.POST.get('city', '')
@@ -70,7 +74,22 @@ def checkout(request,):
         update.save()
         thank = True
         id = order.order_id
-        return render(request, "checkout.html", {'thank': thank,'id': id})
+        #return render(request, "checkout.html", {'thank': thank,'id': id})
+        #request paytm to transfer the amount to yours
+        param_dict={
+
+            'MID': 'seTfxc48262357341841',
+            'ORDER_ID': str(order.order_id),
+            'TXN_AMOUNT': amount,
+            'CUST_ID': email,
+            'INDUSTRY_TYPE_ID': 'Retail',
+            'WEBSITE': 'WEBSTAGING',
+            'CHANNEL_ID': 'WEB',
+            'CALLBACK_URL':'http://127.0.0.1:8000/handlerequest/',
+        }
+        param_dict['CHECKSUMHASH'] = Checksum.generate_checksum(param_dict, MERCHANT_KEY)
+
+        return render(request, 'paytm.html', {'param_dict': param_dict})
 
     return render(request, "checkout.html")
 
@@ -86,7 +105,7 @@ def tracker(request):
                 updates = []
                 for item in update:
                     updates.append({'text': item.update_desc, 'time': item.timestamp})
-                    response = json.dumps(updates, default=str)
+                    response = json.dumps(updates, order[0].items_json, default=str)
                 return HttpResponse(response)
             else:
                 return HttpResponse('{}')
@@ -94,3 +113,20 @@ def tracker(request):
             return HttpResponse('{}')
 
     return render(request, "tracker.html", )
+
+@csrf_exempt
+def handlerequest(request):
+    #paytm will send you post rqst
+    form = request.POST
+    response_dict = {}
+    for i in form.keys():
+        response_dict[i] = form[i]
+        if i == 'CHECKSUMHASH':
+            checksum = form[i]
+    verify = Checksum.verify_checksum(response_dict, MERCHANT_KEY, checksum)
+    if verify:
+        if response_dict['RESPCODE'] == '01':
+            print("order successful")
+        else:
+            print('order was not successful because' + response_dict['RESPMSG'])
+    return render(request, 'paymentstatus.html', {'response': response_dict})

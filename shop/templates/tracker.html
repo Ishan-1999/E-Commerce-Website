@@ -2,45 +2,53 @@
 {% block title %}CuddlesForKids | Track Your Order{% endblock %}
 {% block css %}
 <style>
-        .navbar-custom {
-            background-color: #809fff;
-        }
-        .navbar-custom .navbar-brand,
-        .navbar-custom .nav-link,
-        .navbar-custom .btn,
-        .navbar-custom .navbar-text {
-            color: white;
-        }
-        .footer {
-          left: 0;
-          bottom: 0;
-          width: 100%;
-          text-align: center;
-        }
-        .navbar-toggler-icon {
-          background-image: url("data:image/svg+xml;charset=utf8,%3Csvg viewBox='0 0 32 32' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath stroke='white' stroke-width='2' stroke-linecap='round' stroke-miterlimit='10' d='M4 8h24M4 16h24M4 24h24'/%3E%3C/svg%3E");
-        }
-        .navbar-toggler {
-          border-color: white;
-        }
+	.container {
+		min-height: 700px;
+	}
+
+	.navbar-custom {
+		background-color: #809fff;
+	}
+
+	.navbar-custom .navbar-brand,
+	.navbar-custom .nav-link,
+	.navbar-custom .btn,
+	.navbar-custom .navbar-text {
+		color: white;
+	}
+
+	.footer {
+		left: 0;
+		bottom: 0;
+		width: 100%;
+		text-align: center;
+	}
+
+	.navbar-toggler-icon {
+		background-image: url("data:image/svg+xml;charset=utf8,%3Csvg viewBox='0 0 32 32' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath stroke='white' stroke-width='2' stroke-linecap='round' stroke-miterlimit='10' d='M4 8h24M4 16h24M4 24h24'/%3E%3C/svg%3E");
+	}
+
+	.navbar-toggler {
+		border-color: white;
+	}
 </style>
 {% endblock %}
 {% block body %}
 {% load static %}
 <div class="container mt-2 mb-5" style="min-height: 700px;">
-    <h3>Track Your Order</h3><br>
-    <form method="post" id="trackerForm"> {% csrf_token %}
-	  <div class="form-row">
-	    <div class="form-group col-md-6">
-	      <label for="orderid">Order Id</label>
-	      <input type="orderid" class="form-control" id="orderid" name="orderid">
-	    </div>
-	    <div class="form-group col-md-6">
-	      <label for="email">Email</label>
-	      <input type="email" class="form-control" id="email" name="email">
-	    </div>
-	  </div>
-	  	<button type="submit" class="btn btn-danger float-right">Track Order</button>
+	<h3>Track Your Order</h3><br>
+	<form method="post" id="trackerForm"> {% csrf_token %}
+		<div class="form-row">
+			<div class="form-group col-md-6">
+				<label for="orderid">Order Id</label>
+				<input type="orderid" class="form-control" id="orderid" name="orderid">
+			</div>
+			<div class="form-group col-md-6">
+				<label for="email">Email</label>
+				<input type="email" class="form-control" id="email" name="email">
+			</div>
+		</div>
+		<button type="submit" class="btn btn-danger float-right">Track Order</button>
 	</form>
 	<div class="my-4">
 		<br><br>
@@ -52,36 +60,43 @@
 
 {% block js %}
 <script>
-$('#trackerForm').submit(function(event) {
-	$('#items').empty();
-	var formData = {
-		'orderid': $('input[name=orderid]').val(),
-		'email': $('input[name=email]').val(),
-		'csrfmiddlewaretoken': $('input[name=csrfmiddlewaretoken]').val()
-	};
-	$.ajax({
-		type: 'POST',
-		url: '/shop/tracker/',
-		data: formData,
-		encode: true		
-	})
+	if (localStorage.getItem('cart') == null) {
+		var cart = {};
+	}
+	else {
+		cart = JSON.parse(localStorage.getItem('cart'));
+		document.getElementById('cart').innerHTML = Object.keys(cart).length;
+	}
+	$('#trackerForm').submit(function (event) {
+		$('#items').empty();
+		var formData = {
+			'orderid': $('input[name=orderid]').val(),
+			'email': $('input[name=email]').val(),
+			'csrfmiddlewaretoken': $('input[name=csrfmiddlewaretoken]').val()
+		};
+		$.ajax({
+			type: 'POST',
+			url: '/shop/tracker/',
+			data: formData,
+			encode: true
+		})
 
-	.done(function(data){
-		updates = JSON.parse(data);
-		if (updates.length>0 & updates != {}) {
-			for (i=0; i<updates.length; i++) {
-				let text = updates[i]['text'];
-				let time = updates[i]['time'];
-				  mystr = `<li class="list-group-item d-flex justify-content-between align-items-center">${text}
+			.done(function (data) {
+				updates = JSON.parse(data);
+				if (updates.length > 0 & updates != {}) {
+					for (i = 0; i < updates.length; i++) {
+						let text = updates[i]['text'];
+						let time = updates[i]['time'];
+						mystr = `<li class="list-group-item d-flex justify-content-between align-items-center">${text}
 				  <span class="badge badge-primary badge-pill">${time}</span></li>`
-	        $('#items').append(mystr);
-			}
-		} else {
-			mystr = `<li class="list-group-item d-flex justify-content-between align-items-center">Sorry, We are not able to fetch your order status. Make sure you have typed the write details.</li>`
-			$('#items').append(mystr);
-		}	
+						$('#items').append(mystr);
+					}
+				} else {
+					mystr = `<li class="list-group-item d-flex justify-content-between align-items-center">Sorry, We are not able to fetch your order status. Make sure you have typed the write details.</li>`
+					$('#items').append(mystr);
+				}
+			});
+		event.preventDefault();
 	});
-	event.preventDefault();
-});
 </script>
 {% endblock %}

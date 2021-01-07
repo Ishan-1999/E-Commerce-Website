@@ -2,85 +2,145 @@
 {% block title %}CuddlesForKids | Checkout{% endblock %}
 {% block css %}
 <style>
-        .navbar-custom {
-            background-color: #809fff;
-        }
-        .navbar-custom .navbar-brand,
-        .navbar-custom .nav-link,
-        .navbar-custom .btn,
-        .navbar-custom .navbar-text {
-            color: white;
-        }
-        .footer {
-          left: 0;
-          bottom: 0;
-          width: 100%;
-          text-align: center;
-        }
-        .navbar-toggler-icon {
-          background-image: url("data:image/svg+xml;charset=utf8,%3Csvg viewBox='0 0 32 32' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath stroke='white' stroke-width='2' stroke-linecap='round' stroke-miterlimit='10' d='M4 8h24M4 16h24M4 24h24'/%3E%3C/svg%3E");
-        }
-        .navbar-toggler {
-          border-color: white;
-        }
+	.container {
+		min-height: 700px;
+	}
+
+	.navbar-custom {
+		background-color: #809fff;
+	}
+
+	.navbar-custom .navbar-brand,
+	.navbar-custom .nav-link,
+	.navbar-custom .btn,
+	.navbar-custom .navbar-text {
+		color: white;
+	}
+
+	.footer {
+		left: 0;
+		bottom: 0;
+		width: 100%;
+		text-align: center;
+	}
+
+	.navbar-toggler-icon {
+		background-image: url("data:image/svg+xml;charset=utf8,%3Csvg viewBox='0 0 32 32' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath stroke='white' stroke-width='2' stroke-linecap='round' stroke-miterlimit='10' d='M4 8h24M4 16h24M4 24h24'/%3E%3C/svg%3E");
+	}
+
+	.navbar-toggler {
+		border-color: white;
+	}
 </style>
 {% endblock %}
 {% block body %}
+<div class="container mt-2 mb-5">
+	<div class="row">
+		<div class="col-md-8">
+			<h5><b>My Shopping Cart</b></h5>
+			<div class="mt-4">
+				<table id="items" style="width:100%">
+					<tr>
+						<th></th>
+						<th>Item</th>
+						<th style="text-align: center;">Qty</th>
+						<th style="text-align: center;"></th>
+					</tr>
+				</table>
+			</div>
+		</div>
+		<div class="col-md-4" style="border: 1px solid #f0f5f5;">
+			<h5 class="mt-2" style="font-size: 15px; color: grey"><b>PRICE DETAILS</b></h5>
+			<p>Cart Total<span style="float:right;">Rs.<span id="cartTotal">-</span></span></p>
+			<hr>
+		</div>
+	</div>
+</div>
 {% load static %}
 <div class="container mt-2 mb-5">
-    <h3>Checkout</h3><br>
-    <form method="post" action="{% url 'checkout'%}"> {% csrf_token %}
-      <input type="hidden" name="items_json" id="items_json">		
-	  <div class="form-row">
-	    <div class="form-group col-md-6">
-	      <label for="name">Name</label>
-	      <input type="name" class="form-control" id="name" name="name">
-	    </div>
-	    <div class="form-group col-md-6">
-	      <label for="email">Email</label>
-	      <input type="email" class="form-control" id="email" name="email">
-	    </div>
-	  </div>
-	  <div class="form-group">
-	    <label for="address">Address</label>
-	    <input type="text" class="form-control" id="address" name="address" placeholder="1234 Main St...">
-	  </div>
-	  <div class="form-row">
-	    <div class="form-group col-md-6">
-	      <label for="city">City</label>
-	      <input type="text" class="form-control" id="city" name="city">
-	    </div>
-	    <div class="form-group col-md-4">
-	      <label for="state">State</label>
-	      <input type="text" class="form-control" id="state" name="state">
-	    </div>
-	    <div class="form-group col-md-2">
-	      <label for="zip_code">Zip Code</label>
-	      <input type="text" class="form-control" id="zip_code" name="zip_code">
-	    </div>
-	    <div class="form-group col-md-6">
-	      <label for="phone">Phone Number</label>
-	      <input type="text" class="form-control" id="phone" name="phone">
-	    </div>
-	  </div>
-	  <button type="submit" class="btn btn-danger">PAY</button>
+	<h3>Checkout</h3><br>
+	<form method="post" action="{% url 'checkout'%}"> {% csrf_token %}
+		<input type="hidden" name="items_json" id="items_json">
+		<input type="hidden" name="amount" id="amount">
+		<div class="form-row">
+			<div class="form-group col-md-6">
+				<label for="name">Name</label>
+				<input type="name" class="form-control" id="name" name="name">
+			</div>
+			<div class="form-group col-md-6">
+				<label for="email">Email</label>
+				<input type="email" class="form-control" id="email" name="email">
+			</div>
+		</div>
+		<div class="form-group">
+			<label for="address">Address</label>
+			<input type="text" class="form-control" id="address" name="address" placeholder="1234 Main St...">
+		</div>
+		<div class="form-row">
+			<div class="form-group col-md-6">
+				<label for="city">City</label>
+				<input type="text" class="form-control" id="city" name="city">
+			</div>
+			<div class="form-group col-md-4">
+				<label for="state">State</label>
+				<input type="text" class="form-control" id="state" name="state">
+			</div>
+			<div class="form-group col-md-2">
+				<label for="zip_code">Zip Code</label>
+				<input type="text" class="form-control" id="zip_code" name="zip_code">
+			</div>
+			<div class="form-group col-md-6">
+				<label for="phone">Phone Number</label>
+				<input type="text" class="form-control" id="phone" name="phone">
+			</div>
+		</div>
+		<button type="submit" class="btn btn-danger">PAY</button>
 	</form>
 </div>
 {% endblock %}
 
 {% block js %}
 <script>
-if(localStorage.getItem('cart') == null) {
-    var cart = {};
-    }
-    else {
-    cart = JSON.parse(localStorage.getItem('cart'));
-    }
- $('#items_json').val(JSON.stringify(cart));
- {% if thank %}
-	 alert('Order Placed. Your Order ID is {{ id }}');
-	 localStorage.clear();  
-	 document.location = "/shop"; 
-{% endif %}	 
+	if (localStorage.getItem('cart') == null) {
+		var cart = {};
+	}
+	else {
+		cart = JSON.parse(localStorage.getItem('cart'));
+	}
+	$('#items_json').val(JSON.stringify(cart));
+	{% if thank %}
+	alert('Order Placed. Your Order ID is {{ id }}');
+	localStorage.clear();
+	document.location = "/shop";
+	{% endif %}
+	if ($.isEmptyObject(cart)) {
+		mystr = `<h4 style="text-align: center; color: #e6e6e6">Cart is Empty</h4>`;
+		$('#items').append(mystr);
+	}
+	else {
+		for (item in cart) {
+			let name = cart[item][1];
+			let qty = cart[item][0];
+			let imgsrc = cart[item][2];
+			let price = cart[item][3];
+			mystr = `<tr><td style="text-align: center;"><img src="${imgsrc}" height="80px" width="60px"></td><td>${name}<br>
+			${price}</td><td style="text-align: center;"><span class="divpr"><span id="val${item}">${qty}</span></span></td><td style="text-align: center;">
+			<a href="{% url 'cartview' %}">
+			</a></td></tr>`
+			$('#items').append(mystr);
+		}
+	}
+	updateTotal();
+	function updateTotal() {
+		var sum = 0;
+		for (item in cart) {
+			let qty = cart[item][0];
+			let price = cart[item][3];
+			prodprice = parseInt(price.slice(3,));
+			sum = sum + prodprice * parseInt(qty);
+			document.getElementById('cartTotal').innerHTML = sum;
+		}
+	}
+	$('#amount').val($('#cartTotal').html());
 </script>
 {% endblock %}

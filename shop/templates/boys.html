@@ -2,80 +2,94 @@
 {% block title %}CuddlesForKids | Boys Collection{% endblock %}
 {% block css %}
 <style>
-        .navbar-custom { 
-            background-color: #809fff; 
-        } 
-        .navbar-custom .navbar-brand,
-        .navbar-custom .nav-link, 
-        .navbar-custom .btn,
-        .navbar-custom .navbar-text { 
-            color: white; 
-        } 
-        .navbar-toggler-icon {
-          background-image: url("data:image/svg+xml;charset=utf8,%3Csvg viewBox='0 0 32 32' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath stroke='white' stroke-width='2' stroke-linecap='round' stroke-miterlimit='10' d='M4 8h24M4 16h24M4 24h24'/%3E%3C/svg%3E");
-        }
-        .navbar-toggler {
-          border-color: white;
-        }
-        .rounded-circle {
-          padding: 15px;
-        }
-        .col-sm-3 {
-          display: inline-block;
-          padding: 5px;
-        }
-        .card-text {
-          font-size: 12px;
-          padding-top: 0px;
-        }
-        .row {
-          padding: 5px;
-        }
-        .footer {
-          left: 0;
-          bottom: 0;
-          width: 100%;
-          text-align: center;
-        }
+  .container {
+    min-height: 700px;
+  }
+
+  .navbar-custom {
+    background-color: #809fff;
+  }
+
+  .navbar-custom .navbar-brand,
+  .navbar-custom .nav-link,
+  .navbar-custom .btn,
+  .navbar-custom .navbar-text {
+    color: white;
+  }
+
+  .navbar-toggler-icon {
+    background-image: url("data:image/svg+xml;charset=utf8,%3Csvg viewBox='0 0 32 32' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath stroke='white' stroke-width='2' stroke-linecap='round' stroke-miterlimit='10' d='M4 8h24M4 16h24M4 24h24'/%3E%3C/svg%3E");
+  }
+
+  .navbar-toggler {
+    border-color: white;
+  }
+
+  .rounded-circle {
+    padding: 15px;
+  }
+
+  .col-sm-3 {
+    display: inline-block;
+    padding: 5px;
+  }
+
+  .card-text {
+    font-size: 12px;
+    padding-top: 0px;
+  }
+
+  .row {
+    padding: 5px;
+  }
+
+  .footer {
+    left: 0;
+    bottom: 0;
+    width: 100%;
+    text-align: center;
+  }
 </style>
 {% endblock %}
 {% block body %}
-    {% load static %}
-    <!-- BreadCrumb -->
-    <nav aria-label="breadcrumb">
-      <ol class="breadcrumb">
-        <li class="breadcrumb-item"><a href="{% url 'home' %}">Home</a></li>
-        <li class="breadcrumb-item active" aria-current="page">Boys</li>
-      </ol>
-    </nav>
-    <!-- Products -->
-    <div class="container">
-      <div class="row" align="center">
-          {% for i in products %}
-          <div class="col-sm-3">
-        <div class="card" style="width: 14rem;">
-          <img src="/media/{{ i.image }}" class="card-img-top" alt="..." height="250px" width="50px">
-          <div class="card-body">
-            <p class="card-title"><b>{{ i.brand }}</b></p>
-            <p class="card-text">{{ i.product_name }}<br><b>Rs.{{ i.price }}</b></p><hr>
-              <form action="/shop/products/{{ i.id }}" method="post"> {% csrf_token %}
-                  <button id="qv{{ i.id }}" name="Boys" value="Boys" class="btn btn-outline-warning btn-sm cart my-2">View Product</button>
-              </form>
-          </div>
+{% load static %}
+<!-- BreadCrumb -->
+<nav aria-label="breadcrumb">
+  <ol class="breadcrumb">
+    <li class="breadcrumb-item"><a href="{% url 'home' %}">Home</a></li>
+    <li class="breadcrumb-item active" aria-current="page">Boys</li>
+  </ol>
+</nav>
+<!-- Products -->
+<div class="container">
+  <div class="row" align="center">
+    {% for i in products %}
+    <div class="col-sm-3">
+      <div class="card" style="width: 14rem;">
+        <img src="/media/{{ i.image }}" class="card-img-top" alt="..." height="250px" width="50px">
+        <div class="card-body">
+          <p class="card-title"><b>{{ i.brand }}</b></p>
+          <p class="card-text">{{ i.product_name }}<br><b>Rs.{{ i.price }}</b></p>
+          <hr>
+          <form action="/shop/products/{{ i.id }}" method="post"> {% csrf_token %}
+            <button id="qv{{ i.id }}" name="Boys" value="Boys" class="btn btn-outline-warning btn-sm cart my-2">View
+              Product</button>
+          </form>
         </div>
       </div>
-          {% endfor %}
     </div>
-    </div>
+    {% endfor %}
+  </div>
+</div>
 {% endblock %}
 {% block js %}
 <script>
-if(localStorage.getItem('cart') == null) {
+  if (localStorage.getItem('cart') == null) {
     var cart = {};
-    }
-    else {
+  }
+  else {
     cart = JSON.parse(localStorage.getItem('cart'));
     document.getElementById('cart').innerHTML = Object.keys(cart).length;
-    }
+  }
 </script>
 {% endblock %}
