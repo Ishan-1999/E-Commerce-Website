@@ -62,6 +62,11 @@
     text-align: center;
   }
 
+  .fas {
+    color: #dc3545;
+    font-size: 20px;
+  }
+
   @media (max-width: 700px) {}
 </style>
 {% endblock %}
@@ -78,7 +83,7 @@
 <!-- CartView -->
 <div class="container">
   <div class="row">
-    <div class="col-md-8">
+    <div class="col-12 col-md-8 mb-5">
       <h5><b>My Shopping Cart</b></h5>
       <div class="mt-4">
         <table id="items" style="width:100%">
@@ -91,7 +96,7 @@
         </table>
       </div>
     </div>
-    <div class="col-md-4" style="border: 1px solid #f0f5f5;">
+    <div class="col-12 col-md-4" style="border: 1px solid #f0f5f5;">
       <h5 class="mt-2" style="font-size: 15px; color: grey"><b>PRICE DETAILS</b></h5>
       <p>Cart Total<span id="cartTotal" style="float:right;">-</span></p>
       <hr>
@@ -132,7 +137,10 @@
       let qty = cart[item][0];
       let imgsrc = cart[item][2];
       let price = cart[item][3];
-      mystr = `<tr><td style="text-align: center;"><img src="${imgsrc}" height="80px" width="60px"></td><td>${name}<br>${price}</td><td style="text-align: center;"><span class="divpr"><button id="minus${item}" class="btn btn-outline-primary btn-sm minus">-</button><span id="val${item}">${qty}</span><button id="plus${item}" class="btn btn-outline-primary btn-sm plus">+</button></span></td><td style="text-align: center;"><a href="{% url 'cartview' %}"><button id="remove${item}" class="btn btn-danger btn-sm remove">Remove</button></a></td></tr>`
+      mystr = `<tr><td style="text-align: center;"><img src="${imgsrc}" height="80px" width="60px"></td><td>${name}<br>${price}</td>
+        <td style="text-align: center;"><span class="divpr"><button id="minus${item}" class="btn btn-outline-primary btn-sm minus">-</button>
+        <span id="val${item}">${qty}</span><button id="plus${item}" class="btn btn-outline-primary btn-sm plus">+</button></span></td>
+        <td style="text-align: center;"><a href="{% url 'cartview' %}"><i class="fas fa-trash remove" id="remove${item}"></i></a></td></tr>`
       $('#items').append(mystr);
     }
   }

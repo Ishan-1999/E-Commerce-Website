@@ -10,12 +10,9 @@
   {% load static %}
   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
     integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
-  <link rel="stylesheet" type="text/css" href="{% static 'css/styles.css' %}">
 
   <title>{% block title %} {% endblock %}</title>
-  {% block css %}
-  
-  {% endblock %}
+  {% block css %} {% endblock %}
 </head>
 
 <body>
@@ -63,7 +60,7 @@
   <!-- Footer -->
   <div class="footer mt-10">
     <footer class="page-footer font-small blue-grey lighten-5">
-      <div class="container text-center text-md-left">
+      <div class="container-fluid text-center text-md-left">
         <div class="row dark-grey-text">
           <div class="col-md-3 col-lg-4 col-xl-3">
             <h6 class="text-uppercase font-weight-bold">CuddlesForKids</h6>
@@ -112,6 +109,7 @@
   <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"
     integrity="sha384-B4gt1jrGC7Jh4AgTPSdUtOBvfO8shuf57BaghqFfPlYxofvL8/KUEfYiJOMMV+rV"
     crossorigin="anonymous"></script>
+    <script src="https://kit.fontawesome.com/5980c1671d.js" crossorigin="anonymous"></script>  
 
 
   {% block js %} {% endblock %}
