@@ -3,6 +3,7 @@ from django.http import HttpResponse
 import json
 from django.views.decorators.csrf import csrf_exempt
 from Paytm import Checksum
+from math import ceil
 
 
 # Create your views here.
@@ -12,6 +13,29 @@ MERCHANT_KEY = 'kgaR9AEPKRZToz#M'
 
 def home(request):
     return render(request, "home.html")
+
+
+def search(request):
+    query = request.GET.get('search')
+    allProds = []
+    catprods = Product.objects.values('category')
+    cats = {item['category'] for item in catprods}
+    for cat in cats:
+        prodtemp = Product.objects.filter(category=cat)
+        prod=[item for item in prodtemp if searchMatch(query, item)]
+        if len(prod)!= 0:
+            allProds.append(prod)
+    params = {'allProds': allProds, "msg":""}
+    if len(allProds)==0 or len(query)<4:
+        params={'msg':"No Results Found."}
+    return render(request, 'search.html', params)  
+
+
+def searchMatch(query, item):
+    if query.lower() in item.product_name.lower() or query.lower() in item.category.lower() or query.lower() in item.brand.lower():
+        return True
+    else:
+        return False
 
 
 def boys(request):

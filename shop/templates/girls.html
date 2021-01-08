@@ -61,10 +61,10 @@
   </ol>
 </nav>
 <!-- Products -->
-<div class="container">
-  <div class="row card-deck" align="center">
+<div class="container mb-5">
+  <div class="row" align="center">
     {% for i in products %}
-    <div class="col-sm-3">
+    <div class="col-12 col-sm-4 col-lg-3">
       <div class="card" style="width: 14rem;">
         <img src="/media/{{ i.image }}" class="card-img-top" alt="..." height="250px" width="50px">
         <div class="card-body">
@@ -72,7 +72,7 @@
           <p class="card-text">{{ i.product_name }}<br><b>Rs.{{ i.price }}</b></p>
           <hr>
           <form action="/shop/products/{{ i.id }}" method="post"> {% csrf_token %}
-            <button id="qv{{ i.id }}" name="Girls" value="Boys" class="btn btn-outline-warning btn-sm cart my-2">View
+            <button id="qv{{ i.id }}" name="Boys" value="Boys" class="btn btn-outline-warning btn-sm cart my-2">View
               Product</button>
           </form>
         </div>

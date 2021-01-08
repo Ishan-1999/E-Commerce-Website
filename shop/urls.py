@@ -10,5 +10,6 @@ urlpatterns = [
     path('cartview/', views.cartview, name="cartview"),
     path('checkout/', views.checkout, name="checkout"),
     path('tracker/', views.tracker, name="tracker"),
+    path('search/', views.search, name="search"),
     path("handlerequest/", views.handlerequest, name="HandleRequest"),
 ]

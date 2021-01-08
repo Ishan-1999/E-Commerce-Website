@@ -35,25 +35,29 @@
 {% endblock %}
 {% block body %}
 {% load static %}
-<div class="container mt-2 mb-5" style="min-height: 700px;">
-	<h3>Track Your Order</h3><br>
-	<form method="post" id="trackerForm"> {% csrf_token %}
-		<div class="form-row">
-			<div class="form-group col-md-6">
-				<label for="orderid">Order Id</label>
-				<input type="orderid" class="form-control" id="orderid" name="orderid">
-			</div>
-			<div class="form-group col-md-6">
-				<label for="email">Email</label>
-				<input type="email" class="form-control" id="email" name="email">
-			</div>
+<div class="container mt-5 mb-5">
+	<div class="row">
+		<div class="col-12">
+			<h3>Track Your Order</h3><br>
+			<form method="post" id="trackerForm"> {% csrf_token %}
+				<div class="form-row">
+					<div class="form-group col-md-6">
+						<label for="orderid">Order Id</label>
+						<input type="orderid" class="form-control" id="orderid" name="orderid">
+					</div>
+					<div class="form-group col-md-6">
+						<label for="email">Email</label>
+						<input type="email" class="form-control" id="email" name="email">
+					</div>
+				</div>
+				<button type="submit" class="btn btn-danger float-right">Track Order</button>
+			</form>
 		</div>
-		<button type="submit" class="btn btn-danger float-right">Track Order</button>
-	</form>
-	<div class="my-4">
-		<br><br>
+		<div class="col-12">
+			<br><br>
 		<h3>Your Order Status</h3>
 		<ul class="list-group" id="items"></ul>
+		</div>
 	</div>
 </div>
 {% endblock %}

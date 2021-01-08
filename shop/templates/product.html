@@ -54,10 +54,10 @@
 </nav>
 <div class="container">
   <div class="row">
-    <div class="col-md-4">
-      <img class="img" id="img{{ product.id }}" src="/media/{{ product.image }}" alt="">
+    <div class="col-12 col-md-4">
+      <img class="img img-fluid" id="img{{ product.id }}" src="/media/{{ product.image }}" alt="">
     </div>
-    <div class="col-md-8 my-5">
+    <div class="col-12 col-md-8 my-5">
       <h4><b>{{ product.brand }}</b></h4>
       <p id="prname" style="color: #8c8c8c; font-size: 20px">{{ product.product_name }}</p>
       <p id="price" style="font-size: 20px; font-weight: bold;">Rs.{{ product.price }}</p>
@@ -65,6 +65,7 @@
       <button id="pr{{ product.id }}" class="btn btn-outline-primary btn-lg cart">Add to Cart</button>
       <hr>
       <p style="font-size: 15px"><b>PRODUCT DETAILS</b></p>
+      <p>{{ product.desc }}</p>
     </div>
   </div>
 </div>
