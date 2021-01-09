@@ -49,6 +49,22 @@
     width: 100%;
     text-align: center;
   }
+
+  .filter {
+    color: black;
+  }
+
+  @media (max-width: 700px) {
+    button {
+      font-size: 12px;
+    }
+  }
+
+  @media (min-width: 701px) {
+    button {
+      font-size: 15px;
+    }
+  }
 </style>
 {% endblock %}
 {% block body %}
@@ -62,9 +78,21 @@
 </nav>
 <!-- Products -->
 <div class="container mb-5">
+  <div class="row d-flex justify-content-end">
+    <div>
+      <form id="filterform" action="{% url 'boys' %}" method="post"> {% csrf_token %}
+        <input type="hidden" id="priceFilter" name="priceFilter" value="{{ priceFilter }}">
+        <select class="form-control" id="filterDrop" onchange="filter(this.value)">
+          <option>Default</option>
+          <option class="LTH" value="LTH">Price-- Low to High</option>
+          <option class="HTL" value="HTL">Price-- High to Low</option>
+        </select>
+      </form>
+    </div>
+  </div>
   <div class="row" align="center">
     {% for i in products %}
-    <div class="col-12 col-sm-4 col-lg-3">
+    <div class="col-12 col-sm-4 col-lg-3 mt-3">
       <div class="card" style="width: 14rem;">
         <img src="/media/{{ i.image }}" class="card-img-top" alt="..." height="250px" width="50px">
         <div class="card-body">
@@ -90,6 +118,17 @@
   else {
     cart = JSON.parse(localStorage.getItem('cart'));
     document.getElementById('cart').innerHTML = Object.keys(cart).length;
+  }
+
+  if (document.getElementById('priceFilter').value == 'LTH') {
+    document.getElementById("filterDrop").selectedIndex = 1;
+  }
+  if (document.getElementById('priceFilter').value == 'HTL') {
+    document.getElementById("filterDrop").selectedIndex = 2;
+  }
+  function filter(val) {
+    document.getElementById("priceFilter").value = val;
+    document.getElementById('filterform').submit();
   }
 </script>
 {% endblock %}

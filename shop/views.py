@@ -39,12 +39,32 @@ def searchMatch(query, item):
 
 
 def boys(request):
+    if request.method == 'POST':
+        priceFilter = request.POST.get('priceFilter')
+        if priceFilter == 'LTH':
+            products = Product.objects.filter(gender="M").order_by('price')
+            params = {'products': products, 'priceFilter': priceFilter}
+            return render(request, "boys.html", params)
+        elif priceFilter == 'HTL':
+            products = Product.objects.filter(gender="M").order_by('price').reverse()
+            params = {'products': products, 'priceFilter': priceFilter}
+            return render(request, "boys.html", params)
     products = Product.objects.filter(gender="M")
     params = {'products': products}
     return render(request, "boys.html", params)
 
 
 def girls(request):
+    if request.method == 'POST':
+        priceFilter = request.POST.get('priceFilter')
+        if priceFilter == 'LTH':
+            products = Product.objects.filter(gender="F").order_by('price')
+            params = {'products': products, 'priceFilter': priceFilter}
+            return render(request, "boys.html", params)
+        elif priceFilter == 'HTL':
+            products = Product.objects.filter(gender="F").order_by('price').reverse()
+            params = {'products': products, 'priceFilter': priceFilter}
+            return render(request, "boys.html", params)
     products = Product.objects.filter(gender="F")
     params = {'products': products}
     return render(request, "girls.html", params)
