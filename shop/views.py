@@ -14,17 +14,42 @@ MERCHANT_KEY = 'kgaR9AEPKRZToz#M'
 def home(request):
     return render(request, "home.html")
 
+query = ''
+
 
 def search(request):
-    query = request.GET.get('search')
-    allProds = []
-    catprods = Product.objects.values('category')
-    cats = {item['category'] for item in catprods}
-    for cat in cats:
-        prodtemp = Product.objects.filter(category=cat)
-        prod=[item for item in prodtemp if searchMatch(query, item)]
-        if len(prod)!= 0:
-            allProds.append(prod)
+    global query
+    if request.method == 'GET':
+        query = request.GET.get('search')
+        allProds = []
+        catprods = Product.objects.values('category')
+        cats = {item['category'] for item in catprods}
+        for cat in cats:
+            prodtemp = Product.objects.filter(category=cat)
+            prods=[item for item in prodtemp if searchMatch(query, item)]
+            if len(prods)!= 0:
+                allProds.append(prods)
+    if request.method == 'POST':
+        priceFilter = request.POST.get('priceFilter')
+        allProds = []
+        catprods = Product.objects.values('category')
+        cats = {item['category'] for item in catprods}
+        if priceFilter == 'LTH':
+            for cat in cats:
+                prodtemp = Product.objects.filter(category=cat).order_by('price')
+                prods=[item for item in prodtemp if searchMatch(query, item)]
+                if len(prods)!= 0:
+                    allProds.append(prods)
+            params = {'allProds': allProds, "msg":"", 'priceFilter': priceFilter}
+            return render(request, "search.html", params)
+        elif priceFilter == 'HTL':
+            for cat in cats:
+                prodtemp = Product.objects.filter(category=cat).order_by('price').reverse()
+                prods=[item for item in prodtemp if searchMatch(query, item)]
+                if len(prods)!= 0:
+                    allProds.append(prods)
+            params = {'allProds': allProds, "msg":"", 'priceFilter': priceFilter}
+            return render(request, "search.html", params)
     params = {'allProds': allProds, "msg":""}
     if len(allProds)==0 or len(query)<4:
         params={'msg':"No Results Found."}
@@ -60,11 +85,11 @@ def girls(request):
         if priceFilter == 'LTH':
             products = Product.objects.filter(gender="F").order_by('price')
             params = {'products': products, 'priceFilter': priceFilter}
-            return render(request, "boys.html", params)
+            return render(request, "girls.html", params)
         elif priceFilter == 'HTL':
             products = Product.objects.filter(gender="F").order_by('price').reverse()
             params = {'products': products, 'priceFilter': priceFilter}
-            return render(request, "boys.html", params)
+            return render(request, "girls.html", params)
     products = Product.objects.filter(gender="F")
     params = {'products': products}
     return render(request, "girls.html", params)

@@ -55,6 +55,18 @@
 {% load static %}
 <!-- Products -->
 <div class="container mt-5">
+    <div class="row d-flex justify-content-end">
+        <div>
+          <form id="filterform" action="{% url 'search' %}" method="post"> {% csrf_token %}
+            <input type="hidden" id="priceFilter" name="priceFilter" value="{{ priceFilter }}">
+            <select class="form-control" id="filterDrop" onchange="filter(this.value)">
+              <option>Default</option>
+              <option class="LTH" value="LTH">Price-- Low to High</option>
+              <option class="HTL" value="HTL">Price-- High to Low</option>
+            </select>
+          </form>
+        </div>
+      </div>
     <div class="row" align="center">
         {% if msg != '' %}
         <div class="container mt-5">
@@ -74,7 +86,7 @@
                             <p class="card-text">{{ i.product_name }}<br><b>Rs.{{ i.price }}</b></p>
                             <hr>
                             <form action="/shop/products/{{ i.id }}" method="post"> {% csrf_token %}
-                                <button id="qv{{ i.id }}" name="Boys" value="Boys"
+                                <button id="qv{{ i.id }}" name="Search" value="Search"
                                     class="btn btn-outline-warning btn-sm cart my-2">View
                                     Product</button>
                             </form>
@@ -97,5 +109,16 @@
         cart = JSON.parse(localStorage.getItem('cart'));
         document.getElementById('cart').innerHTML = Object.keys(cart).length;
     }
+    
+  if (document.getElementById('priceFilter').value == 'LTH') {
+    document.getElementById("filterDrop").selectedIndex = 1;
+  }
+  if (document.getElementById('priceFilter').value == 'HTL') {
+    document.getElementById("filterDrop").selectedIndex = 2;
+  }
+  function filter(val) {
+    document.getElementById("priceFilter").value = val;
+    document.getElementById('filterform').submit();
+  }
 </script>
 {% endblock %}
