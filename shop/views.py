@@ -2,14 +2,21 @@ from django.shortcuts import render
 from django.http import HttpResponse
 import json
 from django.views.decorators.csrf import csrf_exempt
-from Paytm import Checksum
 from math import ceil
+
+from django.views.decorators.csrf import csrf_exempt
+from django.conf import settings
+from django.contrib.auth.decorators import login_required
+
+# Import Payu from Paywix
+from paywix.payu import Payu
+from django.http import JsonResponse
 
 
 # Create your views here.
 from .models import Product, Contact, Order, OrderUpdate
 
-MERCHANT_KEY = 'kgaR9AEPKRZToz#M'
+key = 'E3Pd3z5P'
 
 def home(request):
     return render(request, "home.html")
@@ -125,6 +132,19 @@ def cartview(request,):
     return render(request, "cartview.html", )
 
 
+payu_config = settings.PAYU_CONFIG
+merchant_key = payu_config.get('merchant_key')
+merchant_salt = payu_config.get('merchant_salt')
+surl = payu_config.get('success_url')
+furl = payu_config.get('failure_url')
+mode = payu_config.get('mode')
+
+# Create Payu Object for making transaction
+# The given arguments are mandatory
+payu = Payu(merchant_key, merchant_salt, surl, furl, mode)
+
+@csrf_exempt
+@login_required
 def checkout(request,):
     if request.method == 'POST':
         items_json = request.POST.get('items_json', '')
@@ -143,22 +163,21 @@ def checkout(request,):
         update.save()
         thank = True
         id = order.order_id
-        #return render(request, "checkout.html", {'thank': thank,'id': id})
-        #request paytm to transfer the amount to yours
-        param_dict={
-
-            'MID': 'seTfxc48262357341841',
-            'ORDER_ID': str(order.order_id),
-            'TXN_AMOUNT': amount,
-            'CUST_ID': email,
-            'INDUSTRY_TYPE_ID': 'Retail',
-            'WEBSITE': 'WEBSTAGING',
-            'CHANNEL_ID': 'WEB',
-            'CALLBACK_URL':'http://127.0.0.1:8000/handlerequest/',
+        #request payu to transfer the amount to yours
+        data = { 'amount': amount, 
+             'firstname': name, 
+             'email': email,
+             'phone': phone,
+             'productinfo': items_json, 
+             'address1': address, 
+             'city': city, 
+             'state': state, 
+             'zipcode': zip_code, 
+             'udf1': '', 'udf2': '', 'udf3': '', 'udf4': '', 'udf5': ''
         }
-        param_dict['CHECKSUMHASH'] = Checksum.generate_checksum(param_dict, MERCHANT_KEY)
-
-        return render(request, 'paytm.html', {'param_dict': param_dict})
+        data.update({"txnid": id})
+        payu_data = payu.transaction(**data)
+        return render(request, 'payu_checkout.html', {"posted": payu_data, 'thank': thank})
 
     return render(request, "checkout.html")
 
@@ -199,3 +218,19 @@ def handlerequest(request):
         else:
             print('order was not successful because' + response_dict['RESPMSG'])
     return render(request, 'paymentstatus.html', {'response': response_dict})
+
+
+# Payu success return page
+@csrf_exempt
+def payu_success(request):
+    data = {k: v[0] for k, v in dict(request.POST).items()}
+    data.update({'thank': True})
+    return render(request, 'success.html', data)
+
+
+# Payu failure page
+@csrf_exempt
+def payu_failure(request):
+    data = {k: v[0] for k, v in dict(request.POST).items()}
+    data.update({'thank': False})
+    return render(request, 'failure.html', data)

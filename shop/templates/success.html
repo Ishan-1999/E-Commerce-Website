@@ -1,0 +1,66 @@
+{% extends 'basic.html' %}
+{% block title %}CuddlesForKids | Payment Status{% endblock %}
+{% block css %}
+<style>
+	.navbar-custom {
+		background-color: #809fff;
+	}
+
+	.navbar-custom .navbar-brand,
+	.navbar-custom .nav-link,
+	.navbar-custom .btn,
+	.navbar-custom .navbar-text {
+		color: white;
+	}
+
+	.footer {
+		left: 0;
+		bottom: 0;
+		width: 100%;
+		text-align: center;
+	}
+
+	.navbar-toggler-icon {
+		background-image: url("data:image/svg+xml;charset=utf8,%3Csvg viewBox='0 0 32 32' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath stroke='white' stroke-width='2' stroke-linecap='round' stroke-miterlimit='10' d='M4 8h24M4 16h24M4 24h24'/%3E%3C/svg%3E");
+	}
+
+	.navbar-toggler {
+		border-color: white;
+	}
+
+	table,
+	th,
+	td {
+		border: 1px solid #f0f5f5;
+	}
+</style>
+{% endblock %}
+{% block body %}
+{% load static %}
+<div class="container mt-5 mb-5">
+	<div class="row">
+		<div class="col-12 text-center">
+			<div style="display:none">
+				<input type="hidden" name="csrfmiddlewaretoken" value="{% csrf_token %}">
+			</div>
+			<div class="text-center">
+				<h4>Thank You.</h4>
+				<h4>Your order status is {{ status }}</h4>
+				<h4>Your Transaction ID for this transaction is {{ txnid }}</h4>
+				<h4>We have received a payment of Rs {{ amount }}</h4>
+			</div>
+		</div>
+		<div class="col-12 text-center mt-5">
+			<a href="/"><button type="submit" class="btn btn-danger">Continue Shopping</button></a>
+		</div>
+	</div>
+</div>
+{% endblock %}
+
+{% block js %}
+<script>
+	{% if thank %}
+	localStorage.clear();
+	{% endif %}
+</script>
+{% endblock %}

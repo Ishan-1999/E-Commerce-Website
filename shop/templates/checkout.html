@@ -112,7 +112,6 @@
 	}
 	$('#items_json').val(JSON.stringify(cart));
 	{% if thank %}
-	alert('Order Placed. Your Order ID is {{ id }}');
 	localStorage.clear();
 	document.location = "/shop";
 	{% endif %}

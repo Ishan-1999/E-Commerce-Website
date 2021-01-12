@@ -38,6 +38,8 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+
+    'paywix'
 ]
 
 MIDDLEWARE = [
@@ -122,3 +124,12 @@ STATIC_URL = '/static/'
 # Managing Media
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 MEDIA_URL = '/media/'
+
+
+PAYU_CONFIG = {
+    "merchant_key": "E3Pd3z5P",
+    "merchant_salt": "z8MWj88Pre",
+    "mode": "test",
+    "success_url": "http://127.0.0.1:8000/success/",
+    "failure_url": "http://127.0.0.1:8000/failure/"
+}

@@ -45,6 +45,20 @@
           <a class="nav-link" href="{% url 'tracker' %}">Track Your Order</a>
         </li>
       </ul>
+      <ul class="navbar-nav mr-2">
+        {% if user.is_authenticated %}
+        <li class="nav-item">
+          <p class="mt-2 text-white">Hello, {{ user.first_name }}</p>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="{% url 'logout' %}">Log Out</a>
+        </li>
+        {% else %}
+        <li class="nav-item">
+          <a class="nav-link" href="{% url 'register' %}">Register/Login</a>
+        </li>
+        {% endif %}
+      </ul>
       <form method="get" action="{% url 'search' %}" class="form-inline my-2 my-lg-0">
         <input class="form-control mr-sm-2" name="search" id="search" type="search" placeholder="Search" aria-label="Search"
         autocomplete="off">
