@@ -12,13 +12,15 @@
   <link href="https://fonts.googleapis.com/css2?family=Yellowtail&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
     integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://unpkg.com/aos@next/dist/aos.css" />
   <title>{% block title %} {% endblock %}</title>
   {% block css %} {% endblock %}
 </head>
 
 <body>
   <nav class="navbar navbar-expand-lg navbar-custom">
-    <a class="navbar-brand" href="{% url 'home' %}"><b><u style="font-family: 'Yellowtail', cursive; font-size:30px;">Mongerr</u></b></a>
+    <a class="navbar-brand" href="{% url 'home' %}"><b><u
+          style="font-family: 'Yellowtail', cursive; font-size:30px;">Mongerr</u></b></a>
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
       aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
@@ -88,8 +90,8 @@
             <hr class="teal accent-3 mb-4 mt-0 d-inline-block mx-auto" style="width: 60px;">
             <p><a class="dark-grey-text" href="#!">Your Account</a></p>
             <p><a class="dark-grey-text" href="#!">Become a Member</a></p>
-            <p><a class="dark-grey-text" href="#!">Track Your Order</a></p>
-            <p><a class="dark-grey-text" href="#!">Help</a></p>
+            <p><a class="dark-grey-text" href="{% url 'tracker' %}">Track Your Order</a></p>
+            <p><a class="dark-grey-text" href="#!">Site Policy</a></p>
           </div>
           <div class="col-md-4 col-lg-3 col-xl-3 mx-auto">
             <h6 class="text-uppercase font-weight-bold">Contact</h6>
@@ -110,7 +112,7 @@
         </div>
       </div>
       <div class="footer-copyright text-center text-black-50 py-3">© 2020 Copyright:
-        <a class="dark-grey-text" href="#"> Mongerr.in</a>
+        <a class="dark-grey-text" href="/"> Mongerr.in</a>
       </div>
     </footer>
   </div>
@@ -126,8 +128,14 @@
     integrity="sha384-B4gt1jrGC7Jh4AgTPSdUtOBvfO8shuf57BaghqFfPlYxofvL8/KUEfYiJOMMV+rV"
     crossorigin="anonymous"></script>
   <script src="https://kit.fontawesome.com/5980c1671d.js" crossorigin="anonymous"></script>
-
-
+  <script src="https://unpkg.com/aos@next/dist/aos.js"></script>
+  <script>
+    AOS.init({
+      offset: 300,
+      duration: 1000,
+      once: true, 
+    });
+  </script>
   {% block js %} {% endblock %}
 </body>
 

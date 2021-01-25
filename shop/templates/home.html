@@ -25,15 +25,6 @@
     border-color: white;
   }
 
-  .rounded-circle {
-    padding: 15px;
-  }
-
-  .girls,
-  .boys {
-    background-color: #e6f7ff;
-  }
-
   .footer {
     left: 0;
     bottom: 0;
@@ -41,26 +32,25 @@
     text-align: center;
   }
 
-  @media (max-width: 700px) {
-    .banner {
-      width: 100%;
-      height: auto;
-    }
-
-    .images {
-      width: 100%;
-      height: auto;
-    }
+  .card:hover {
+    box-shadow: 0 12px 16px 0 rgba(0, 0, 0, 0.24), 0 17px 50px 0 rgba(0, 0, 0, 0.19);
   }
 
-  @media ((min-width: 701px) and (max-width: 1000px)) {
-    .images {
+  @media (max-width: 700px) {
+
+    .card-title,
+    .card-text {
+      font-size: 8px;
+    }
+
+    .banner {
       width: 100%;
       height: auto;
     }
   }
 </style>
 {% endblock %}
+
 {% block body %}
 {% load static %}
 <!-- BreadCrumb -->
@@ -92,55 +82,81 @@
         </div>
       </div>
     </div>
-    <div class="col-12">
-      <div>
-        <!-- Boys Collection -->
-        <img class="banner" src="{% static 'boys_col.jpg' %}" alt=""><br><br>
-        <div class="boys">
-          <div class="row">
-            <div class="col-3">
-              <a href=""><img class="images rounded-circle d-block" src="{% static 'tshirt.jpg' %}" height="200"
-                  width="200"></a>
+    <div class="col-12 p-5">
+      <div class="row">
+        <div class="col-md-6 col-6">
+          <a href="{% url 'boys' %}" style="text-decoration: none; color: black;">
+            <div class="card mb-3" data-aos="flip-left">
+              <div class="row g-0">
+                <div class="col-md-8">
+                  <img class="img-fluid" src="https://source.unsplash.com/350x250/?clothes,thrift" alt="...">
+                </div>
+                <div class="col-md-4">
+                  <div class="card-body">
+                    <h5 class="card-title">Thrift Store</h5>
+                    <p class="card-text">This is a wider card with supporting text below as a natural lead-in to
+                      additional content. This content is a little bit longer.</p>
+                  </div>
+                </div>
+              </div>
             </div>
-            <div class="col-3">
-              <a href=""><img class="images rounded-circle d-block" src="{% static 'shorts.jpg' %}" height="200"
-                  width="200"></a>
+          </a>
+        </div>
+        <div class="col-md-6 col-6">
+          <a href="{% url 'boys' %}" style="text-decoration: none; color: black;">
+            <div class="card mb-3" data-aos="flip-right">
+              <div class="row g-0">
+                <div class="col-md-8">
+                  <img class="img-fluid" src="https://source.unsplash.com/350x250/?diy,diy" alt="...">
+                </div>
+                <div class="col-md-4">
+                  <div class="card-body">
+                    <h5 class="card-title">DIY</h5>
+                    <p class="card-text">This is a wider card with supporting text below as a natural lead-in to
+                      additional content. This content is a little bit longer.</p>
+                  </div>
+                </div>
+              </div>
             </div>
-            <div class="col-3">
-              <a href=""><img class="images rounded-circle d-block" src="{% static 'shirts.jpg' %}" height="200"
-                  width="200"></a>
-            </div>
-            <div class="col-3">
-              <a href=""><img class="images rounded-circle d-block" src="{% static 'jeans.jpg' %}" height="200"
-                  width="200"></a>
-            </div>
-          </div>
+          </a>
         </div>
       </div>
-    </div>
-    <div class="col-12">
-      <div>
-        <!-- Girls Collection -->
-        <img class="banner" src="{% static 'girls_col.jpg' %}" alt=""><br><br>
-        <div class="girls">
-          <div class="row">
-            <div class="col-3">
-              <a href=""><img class="images rounded-circle d-block" src="{% static 'girl_top.jpg' %}" height="200"
-                  width="200"></a>
+      <div class="row">
+        <div class="col-md-6 col-6">
+          <a href="{% url 'boys' %}" style="text-decoration: none; color: black;">
+            <div class="card mb-3" data-aos="flip-left">
+              <div class="row g-0">
+                <div class="col-md-8">
+                  <img class="img-fluid" src="https://source.unsplash.com/350x250/?fashion,jeans" alt="...">
+                </div>
+                <div class="col-md-4">
+                  <div class="card-body">
+                    <h5 class="card-title">Local Sellers</h5>
+                    <p class="card-text">This is a wider card with supporting text below as a natural lead-in to
+                      additional content. This content is a little bit longer.</p>
+                  </div>
+                </div>
+              </div>
             </div>
-            <div class="col-3">
-              <a href=""><img class="images rounded-circle d-block" src="{% static 'girl_jeans.jpg' %}" height="200"
-                  width="200"></a>
+          </a>
+        </div>
+        <div class="col-md-6 col-6">
+          <a href="{% url 'boys' %}" style="text-decoration: none; color: black;">
+            <div class="card mb-3" data-aos="flip-right">
+              <div class="row g-0">
+                <div class="col-md-8">
+                  <img class="img-fluid" src="https://source.unsplash.com/350x250/?food,drinks" alt="...">
+                </div>
+                <div class="col-md-4">
+                  <div class="card-body">
+                    <h5 class="card-title">Foods and Drinks</h5>
+                    <p class="card-text">This is a wider card with supporting text below as a natural lead-in to
+                      additional content.</p>
+                  </div>
+                </div>
+              </div>
             </div>
-            <div class="col-3">
-              <a href=""><img class="images rounded-circle d-block" src="{% static 'girl_tshirt.jpg' %}" height="200"
-                  width="200"></a>
-            </div>
-            <div class="col-3">
-              <a href=""><img class="images rounded-circle d-block" src="{% static 'girl_skirts.jpg' %}" height="200"
-                  width="200"></a>
-            </div>
-          </div>
+          </a>
         </div>
       </div>
     </div>

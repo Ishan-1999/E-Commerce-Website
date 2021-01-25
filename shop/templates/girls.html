@@ -39,6 +39,10 @@
     padding-top: 0px;
   }
 
+  .card:hover {
+    box-shadow: 0 12px 16px 0 rgba(0, 0, 0, 0.24), 0 17px 50px 0 rgba(0, 0, 0, 0.19);
+  }
+
   .row {
     padding: 5px;
   }
@@ -103,7 +107,7 @@
     cart = JSON.parse(localStorage.getItem('cart'));
     document.getElementById('cart').innerHTML = Object.keys(cart).length;
   }
-  
+
   if (document.getElementById('priceFilter').value == 'LTH') {
     document.getElementById("filterDrop").selectedIndex = 1;
   }
