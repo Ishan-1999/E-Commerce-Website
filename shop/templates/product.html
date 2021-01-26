@@ -44,10 +44,14 @@
 <nav aria-label="breadcrumb">
   <ol class="breadcrumb">
     <li class="breadcrumb-item"><a href="{% url 'home' %}">Home</a></li>
-    {% if bVal == 'Boys' %}
-    <li class="breadcrumb-item"><a href="{% url 'boys' %}">{{ bVal }}</a></li>
-    {% elif bVal == 'Girls' %}
-    <li class="breadcrumb-item"><a href="{% url 'girls' %}">{{ bVal }}</a></li>
+    {% if bVal == 'Thrift Store' %}
+    <li class="breadcrumb-item"><a href="{% url 'thrift' %}">{{ bVal }}</a></li>
+    {% elif bVal == 'DIY' %}
+    <li class="breadcrumb-item"><a href="{% url 'diy' %}">{{ bVal }}</a></li>
+    {% elif bVal == 'Local Sellers' %}
+    <li class="breadcrumb-item"><a href="{% url 'local' %}">{{ bVal }}</a></li>
+    {% elif bVal == 'Foods & Drinks' %}
+    <li class="breadcrumb-item"><a href="{% url 'fnd' %}">{{ bVal }}</a></li>
     {% endif %}
     <li class="breadcrumb-item active" aria-current="page">{{ product.product_name }}</li>
   </ol>

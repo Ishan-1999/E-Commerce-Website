@@ -55,8 +55,8 @@
 		</div>
 		<div class="col-12">
 			<br><br>
-		<h3>Your Order Status</h3>
-		<ul class="list-group" id="items"></ul>
+			<h3>Your Order Status</h3>
+			<ul class="list-group" id="items"></ul>
 		</div>
 	</div>
 </div>
@@ -80,20 +80,20 @@
 		};
 		$.ajax({
 			type: 'POST',
-			url: '/shop/tracker/',
+			url: '/tracker/',
 			data: formData,
 			encode: true
 		})
 
-			.done(function (data) {
-				updates = JSON.parse(data);
-				if (updates.length > 0 & updates != {}) {
-					for (i = 0; i < updates.length; i++) {
-						let text = updates[i]['text'];
-						let time = updates[i]['time'];
-						mystr = `<li class="list-group-item d-flex justify-content-between align-items-center">${text}
-				  <span class="badge badge-primary badge-pill">${time}</span></li>`
-						$('#items').append(mystr);
+		.done(function (data) {
+			updates = JSON.parse(data);
+			if (updates.length > 0 & updates != {}) {
+				for (i = 0; i < updates.length; i++) {
+					let text = updates[i]['text'];
+					let time = updates[i]['time'];
+					mystr = `<li class="list-group-item d-flex justify-content-between align-items-center">${text}
+				  	<span class="badge badge-primary badge-pill">${time}</span></li>`
+					$('#items').append(mystr);
 					}
 				} else {
 					mystr = `<li class="list-group-item d-flex justify-content-between align-items-center">Sorry, We are not able to fetch your order status. Make sure you have typed the write details.</li>`

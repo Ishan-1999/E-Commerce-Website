@@ -19,7 +19,7 @@
 
 <body>
   <nav class="navbar navbar-expand-lg navbar-custom">
-    <a class="navbar-brand" href="{% url 'home' %}"><b><u
+    <a class="navbar-brand" href="/"><b><u
           style="font-family: 'Yellowtail', cursive; font-size:30px;">Mongerr</u></b></a>
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
       aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
@@ -29,7 +29,7 @@
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
       <ul class="navbar-nav mr-auto">
         <li class="nav-item active">
-          <a class="nav-link" href="{% url 'home' %}">Home <span class="sr-only">(current)</span></a>
+          <a class="nav-link" href="/">Home <span class="sr-only">(current)</span></a>
         </li>
         <li class="nav-item dropdown">
           <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown"
@@ -37,9 +37,13 @@
             Categories
           </a>
           <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-            <a class="dropdown-item" href="{% url 'boys' %}">Boys</a>
+            <a class="dropdown-item" href="{% url 'thrift' %}">Thrift Store</a>
             <div class="dropdown-divider"></div>
-            <a class="dropdown-item" href="{% url 'girls' %}">Girls</a>
+            <a class="dropdown-item" href="{% url 'diy' %}">DIY</a>
+            <div class="dropdown-divider"></div>
+            <a class="dropdown-item" href="{% url 'local' %}">Local Sellers</a>
+            <div class="dropdown-divider"></div>
+            <a class="dropdown-item" href="{% url 'fnd' %}">Food & Drinks</a>
           </div>
         </li>
         <li class="nav-item">

@@ -70,46 +70,82 @@ def searchMatch(query, item):
         return False
 
 
-def boys(request):
+def thrift(request):
     if request.method == 'POST':
         priceFilter = request.POST.get('priceFilter')
         if priceFilter == 'LTH':
             products = Product.objects.filter(gender="M").order_by('price')
             params = {'products': products, 'priceFilter': priceFilter}
-            return render(request, "boys.html", params)
+            return render(request, "thrift.html", params)
         elif priceFilter == 'HTL':
             products = Product.objects.filter(gender="M").order_by('price').reverse()
             params = {'products': products, 'priceFilter': priceFilter}
-            return render(request, "boys.html", params)
+            return render(request, "thrift.html", params)
     products = Product.objects.filter(gender="M")
     params = {'products': products}
-    return render(request, "boys.html", params)
+    return render(request, "thrift.html", params)
 
 
-def girls(request):
+def diy(request):
+    if request.method == 'POST':
+        priceFilter = request.POST.get('priceFilter')
+        if priceFilter == 'LTH':
+            products = Product.objects.filter(gender="M").order_by('price')
+            params = {'products': products, 'priceFilter': priceFilter}
+            return render(request, "diy.html", params)
+        elif priceFilter == 'HTL':
+            products = Product.objects.filter(gender="M").order_by('price').reverse()
+            params = {'products': products, 'priceFilter': priceFilter}
+            return render(request, "diy.html", params)
+    products = Product.objects.filter(gender="M")
+    params = {'products': products}
+    return render(request, "diy.html", params)
+
+
+def local(request):
+    if request.method == 'POST':
+        priceFilter = request.POST.get('priceFilter')
+        if priceFilter == 'LTH':
+            products = Product.objects.filter(gender="M").order_by('price')
+            params = {'products': products, 'priceFilter': priceFilter}
+            return render(request, "local.html", params)
+        elif priceFilter == 'HTL':
+            products = Product.objects.filter(gender="M").order_by('price').reverse()
+            params = {'products': products, 'priceFilter': priceFilter}
+            return render(request, "local.html", params)
+    products = Product.objects.filter(gender="M")
+    params = {'products': products}
+    return render(request, "local.html", params)
+
+
+def fnd(request):
     if request.method == 'POST':
         priceFilter = request.POST.get('priceFilter')
         if priceFilter == 'LTH':
             products = Product.objects.filter(gender="F").order_by('price')
             params = {'products': products, 'priceFilter': priceFilter}
-            return render(request, "girls.html", params)
+            return render(request, "fnd.html", params)
         elif priceFilter == 'HTL':
             products = Product.objects.filter(gender="F").order_by('price').reverse()
             params = {'products': products, 'priceFilter': priceFilter}
-            return render(request, "girls.html", params)
+            return render(request, "fnd.html", params)
     products = Product.objects.filter(gender="F")
     params = {'products': products}
-    return render(request, "girls.html", params)
+    return render(request, "fnd.html", params)
 
 
 def productView(request, myId):
     breadcrumb = ""
     # fetching product using id
     prods = Product.objects.filter(id=myId)
-    if 'Boys' in request.POST:
-        breadcrumb = 'Boys'
-    elif 'Girls' in request.POST:
-        breadcrumb = 'Girls'
+    if 'Thrift' in request.POST:
+        breadcrumb = 'Thrift Store'
+    elif 'diy' in request.POST:
+        breadcrumb = 'DIY'
+    elif 'local' in request.POST:
+        breadcrumb = 'Local Sellers'
+    elif 'fnd' in request.POST:
+        breadcrumb = 'Foods & Drinks'
 
 
     return render(request, 'product.html', {'product': prods[0], 'bVal': breadcrumb})
@@ -193,13 +229,13 @@ def tracker(request):
                 updates = []
                 for item in update:
                     updates.append({'text': item.update_desc, 'time': item.timestamp})
-                    response = json.dumps(updates, order[0].items_json, default=str)
+                    response = json.dumps(updates, default=str)
+                    print(response)
                 return HttpResponse(response)
             else:
                 return HttpResponse('{}')
         except Exception as e:
             return HttpResponse('{}')
-
     return render(request, "tracker.html", )
 
 @csrf_exempt
