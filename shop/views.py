@@ -193,7 +193,7 @@ def checkout(request,):
         phone = request.POST.get('phone', '')
         zip_code = request.POST.get('zip_code', '')
 
-        order = Order(items_json=items_json, name=name, email=email, address=address, city=city, state=state, phone=phone, zip_code=zip_code)
+        order = Order(items_json=items_json, name=name, email=email, amount=amount, address=address, city=city, state=state, phone=phone, zip_code=zip_code)
         order.save()
         update = OrderUpdate(order_id=order.order_id, update_desc="The Order has been placed")
         update.save()

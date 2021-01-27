@@ -31,6 +31,14 @@
 	.navbar-toggler {
 		border-color: white;
 	}
+
+	i {
+		transition: all 0.3s linear;
+	}
+
+	i:hover {
+		transform: scale(1.4);
+	}
 </style>
 {% endblock %}
 {% block body %}
@@ -85,15 +93,15 @@
 			encode: true
 		})
 
-		.done(function (data) {
-			updates = JSON.parse(data);
-			if (updates.length > 0 & updates != {}) {
-				for (i = 0; i < updates.length; i++) {
-					let text = updates[i]['text'];
-					let time = updates[i]['time'];
-					mystr = `<li class="list-group-item d-flex justify-content-between align-items-center">${text}
+			.done(function (data) {
+				updates = JSON.parse(data);
+				if (updates.length > 0 & updates != {}) {
+					for (i = 0; i < updates.length; i++) {
+						let text = updates[i]['text'];
+						let time = updates[i]['time'];
+						mystr = `<li class="list-group-item d-flex justify-content-between align-items-center">${text}
 				  	<span class="badge badge-primary badge-pill">${time}</span></li>`
-					$('#items').append(mystr);
+						$('#items').append(mystr);
 					}
 				} else {
 					mystr = `<li class="list-group-item d-flex justify-content-between align-items-center">Sorry, We are not able to fetch your order status. Make sure you have typed the write details.</li>`
